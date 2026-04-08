@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airplane Boarding Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="sr-only">Airplane Boarding Simulator</h1>
+    </header>
+
+    <div class="controls" role="search">
+        <div class="control-group">
+            <label for="strategy">Boarding Strategy</label>
+            <select id="strategy" name="strategy" title="Select boarding strategy">
+                <option value="random">Random</option>
+                <option value="backToFront">Back to Front</option>
+                <option value="frontToBack">Front to Back</option>
+                <option value="windowToAisle">Window to Aisle</option>
+                <option value="steffen">Steffen Method</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="baggageProb">Baggage Prob (%)</label>
+            <input type="range" id="baggageProb" name="baggageProb" min="0" max="100" value="70" title="Adjust probability of passengers having luggage">
+            <span id="baggageProbVal" class="val-label" aria-live="polite">70%</span>
+        </div>
+
+        <div class="control-group">
+            <label for="baggageTime">Baggage Time (ticks)</label>
+            <input type="range" id="baggageTime" name="baggageTime" min="1" max="5" value="3" title="Adjust delay time for storing luggage">
+            <span id="baggageTimeVal" class="val-label" aria-live="polite">3</span>
+        </div>
+
+        <div class="control-group">
+            <label for="simSpeed">Sim Speed (ticks/sec)</label>
+            <input type="range" id="simSpeed" name="simSpeed" min="1" max="60" value="15" title="Adjust simulation playback speed">
+            <span id="simSpeedVal" class="val-label" aria-live="polite">15</span>
+        </div>
+
+        <div class="control-group">
+            <label for="batchCount">Batch Runs</label>
+            <input type="number" id="batchCount" name="batchCount" value="10" min="1" title="Enter number of simulations for batch testing">
+        </div>
+
+        <div class="control-group button-row">
+            <button id="startBtn" type="button">Start Single</button>
+            <button id="batchBtn" type="button">Run Batch</button>
+            <button id="resetBtn" type="button">Reset</button>
+        </div>
+    </div>
+
+    <section class="stats-bar" aria-label="Live Statistics">
+        <div class="stat-item">Total Time: <span id="statTime" class="stat-val">0</span></div>
+        <div class="stat-item">Progress: <span id="statSeated" class="stat-val">0</span> / 180</div>
+        <div class="stat-item">Queue Stop Time: <span id="statBlocked" class="stat-val">0</span></div>
+    </section>
+
+    <main class="airplane-container">
+        <div id="airplaneGrid" class="grid" role="img" aria-label="Airplane seating layout grid"></div>
+    </main>
+
+    <footer class="results-section">
+        <h3>Simulation Results Data</h3>
+        <table id="resultsTable">
+            <caption>Summary of past batch simulation runs</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Strategy</th>
+                    <th scope="col">Runs</th>
+                    <th scope="col">Avg Boarding Time</th>
+                    <th scope="col">Avg Queue Stop Time</th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+        </table>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

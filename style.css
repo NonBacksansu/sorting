@@ -1,0 +1,135 @@
+:root {
+    --bg-color: #0f0f0f;
+    --panel-color: #1a1a1a;
+    --accent-color: #4CAF50;
+    --text-color: #f0f0f0;
+    --seat-empty: #2c2c2c;
+    --seat-occupied: #4CAF50;
+    --aisle-color: #222;
+    --passenger-color: #2196F3;
+    --storing-color: #f44336; /* Red for luggage/interference */
+    --luggage-color: #FFC107;
+}
+
+.sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* UI Controls */
+.controls {
+    background-color: var(--panel-color);
+    padding: 15px 30px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    border-bottom: 1px solid #333;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.control-group { display: flex; flex-direction: column; gap: 5px; }
+#batchCount { width: 65px; }
+.button-row { flex-direction: row; align-items: flex-end; gap: 10px; }
+label { font-size: 0.75rem; color: #888; text-transform: uppercase; font-weight: bold; }
+.val-label { font-size: 0.8rem; color: var(--accent-color); text-align: center; }
+
+select, button, input {
+    background: #222; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px;
+}
+
+button { background-color: var(--accent-color); cursor: pointer; font-weight: bold; border: none; }
+button:hover { opacity: 0.9; }
+button#resetBtn { background-color: #d32f2f; }
+
+/* Stats Panel */
+.stats-bar {
+    display: flex; gap: 50px; background: #1e1e1e; padding: 10px 40px;
+    border-radius: 0 0 10px 10px; margin-bottom: 30px; border: 1px solid #333; border-top: none;
+}
+.stat-val { color: var(--accent-color); font-weight: bold; font-size: 1.1rem; }
+
+/* Horizontal Airplane Grid */
+.airplane-container {
+    padding: 30px;
+    background: #111;
+    border-radius: 20px 60px 60px 20px;
+    border: 3px solid #333;
+    margin-bottom: 40px;
+    overflow-x: auto;
+    max-width: 95vw;
+}
+
+.grid {
+    display: grid;
+    /* 7 Rows (ABC, Aisle, DEF) x 31 Columns (Labels + 30 Rows) */
+    grid-template-rows: 25px repeat(3, 35px) 50px repeat(3, 35px);
+    grid-auto-flow: column;
+    gap: 5px;
+}
+
+.cell {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+}
+
+.row-label { color: #555; font-weight: bold; height: 25px; }
+
+.seat { background-color: var(--seat-empty); border-radius: 3px; border: 1px solid #3d3d3d; }
+.seat.occupied { background-color: var(--seat-occupied); border-color: #66bb6a; }
+
+.aisle {
+    background-color: var(--aisle-color);
+    height: 50px;
+    border-top: 1px dashed #444;
+    border-bottom: 1px dashed #444;
+}
+
+/* Passenger Animated Icons */
+.passenger-icon {
+    width: 28px; height: 28px;
+    background-color: var(--passenger-color);
+    border-radius: 50%;
+    position: absolute;
+    z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: bold; color: white;
+    transition: all 0.15s linear;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* Red Color when storing or interference */
+.passenger-icon.is-storing {
+    background-color: var(--storing-color);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--storing-color);
+}
+
+.passenger-icon.has-luggage::after {
+    content: ''; width: 7px; height: 7px; background: var(--luggage-color);
+    position: absolute; top: -1px; right: -1px; border-radius: 1px; border: 1px solid black;
+}
+
+/* Results Table */
+.results-section { width: 80%; max-width: 900px; margin-top: 20px; padding-bottom: 100px; }
+table { width: 100%; border-collapse: collapse; background: var(--panel-color); border-radius: 8px; overflow: hidden; }
+th, td { padding: 12px 15px; border: 1px solid #333; text-align: left; }
+th { background: #252525; color: #888; text-transform: uppercase; font-size: 0.8rem; }
+caption { padding: 10px; font-style: italic; color: #666; font-size: 0.8rem; }
